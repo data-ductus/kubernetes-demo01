@@ -34,7 +34,7 @@ apt-get update && \
 # Install kubectl autocomplete
 apt-get update && \
     apt-get install -y bash-completion && \
-    echo "source <(kubectl completion bash)" >> ~/.bashrc
+    echo -e "source /etc/bash_completion\nsource <(kubectl completion bash)\nsource /etc/bash_completion" >> ~/.bashrc
 
 # Turn of swap, because this is not supported by k8s
 swapoff -a
