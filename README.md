@@ -15,10 +15,12 @@ kubeadm join .... on agents
 
 Show that nodes are "not ready".
 wget https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml
---iface=enp0s8
+
+args:
+  --iface=enp0s8
 kubectl apply -f kube-flannel.yml
 Deploys DNS containers..
-Nodes gets ready
+Nodes gets ready <none> no label yet
 
 # Step 4. Deploy your first pod
 
@@ -33,8 +35,11 @@ spec:
     ports:
     - containerPort: 80
 
+watch kubectl describe pods nginx
 
-# Step 3. Make k8s access from cli outside
+docker rm -f ID # on node
+
+# Step 3. Make k8s access from cli outside (SKIP FOR NOW, SHOW VIA AKS INSTEAD)
 
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
 
@@ -136,6 +141,18 @@ resources:
 
 
 kubectl rollout status deployment/nginx-deployment
+
+Insufficient cpu
+
+limits:
+  memory: "128Mi"
+  cpu: "0.1"
+
+kubectl get rs
+
+kubectl rollout history deployment/nginx-deployment
+
+kubectl rollout undo deployment/nginx-deployment --to-revision=2
 
 kubectl get rs
 
